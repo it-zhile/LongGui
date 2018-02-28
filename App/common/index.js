@@ -6,5 +6,6 @@
  */
 import ImgButton from './ImgButton';
 import TextButton from './TextButton';
+import Scanner from './Scanner';
 
-export { ImgButton, TextButton };
+export { ImgButton, TextButton, Scanner };

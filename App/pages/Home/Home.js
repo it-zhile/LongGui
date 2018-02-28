@@ -59,7 +59,7 @@ export default class Home extends Component {
   renderHeader(){
     return(
       <View style={styles.header} >
-        <ImgButton onPress={()=>{ alert('点击了头像')}} source={ ImgUrls.home_touxiang } style={styles.touxiang} />
+        <ImgButton onPress={()=>{ this._navigate('Mine') }} source={ ImgUrls.home_touxiang } style={styles.touxiang} />
         <View style={styles.search}>
           <TextInput
             style={styles.ipt}
@@ -69,11 +69,20 @@ export default class Home extends Component {
           />
           <Image source={ ImgUrls.home_search } style={ styles.iconSearch } /> 
         </View>
-        <ImgButton onPress={()=>{ alert('点击了扫码按钮')} } source={ ImgUrls.home_scanner} style={styles.iconScanner} />
+        <ImgButton onPress={()=>{ this._navigate('Scanner') }} source={ ImgUrls.home_scanner} style={styles.iconScanner} />
       </View>
     )
   }
 
+
+  /**
+   * 页面跳转事件
+   * 通过 this.props.navigation 接收从主入口 index.js 里传递过来的 navigation 属性用来跳转页面
+   */
+  _navigate(screen) {
+    const { navigate } = this.props.navigation;
+    navigate(screen);
+  }
 
 }
 

@@ -7,8 +7,12 @@ import React, { Component } from 'react';
 import { StyleSheet, Platform, Image } from 'react-native';
 // 导入导航器
 import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
+
 // 导入静态资源
 import { ImgUrls, Colors, CommonStyles, Constants } from './assets/';
+// 导入公用组件
+import { Scanner } from './common/';
+
 // 导入4个程序主页面
 import Home from './pages/Home/Home';
 import JieDan from './pages/JieDan/JieDan';
@@ -122,6 +126,7 @@ const Tab = TabNavigator(TabRouteConfigs,TabNavigatorConfigs);
  */
 const StackRouteConfigs = {
   Tab: { screen: Tab },
+  Scanner: { screen: Scanner },
 };
 /**
  * StackNavigatorConfig：导航器配置
