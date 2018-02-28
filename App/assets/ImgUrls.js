@@ -23,7 +23,10 @@ const ImgUrls = {
   home_touxiang:require('./images/home/touxiang01.jpg'),
   home_search:require('./images/home/放大镜-01.png'),
   home_scanner:require('./images/home/扫码-01.png'),
-  
+  home_swiper_01:require('./images/home/swripe01.png'),
+  home_swiper_02:require('./images/home/swripe02.png'),
+  home_swiper_03:require('./images/home/swripe03.png'),
+  home_swiper_04:require('./images/home/swripe04.png'),
 }
 
 export default ImgUrls;

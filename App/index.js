@@ -107,8 +107,8 @@ const TabNavigatorConfigs = {
   initialRouteName: 'Home',
   tabBarComponent: TabBarBottom,
   tabBarPosition: 'bottom',
-  swipeEnabled: true,
-  animationEnabled: true,
+  swipeEnabled: false,
+  animationEnabled: false,
   lazy: true,
   tabBarOptions: {
     activeTintColor:Colors.app_color,

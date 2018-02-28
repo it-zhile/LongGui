@@ -633,7 +633,137 @@ dependencies {
 
 使用 react-native-camera 相机插件自定义一个扫码组件
 
+```jsx
+/**
+ * Created by date on 2018/02/28
+ * Function: 扫码组件
+ * Desc: 使用 react-native-camera 插件创建自定义扫码组件
+ */
+import React,{ Component } from 'react';
+import { View, Text, } from 'react-native';
+
+// import { RNCamera } from 'react-native-camera';
+
+export default class Scanner extends Component{
+  render(){
+    return(
+      <View>
+        <Text>扫码组件</Text>
+      </View>
+    )
+  }
+}
 ```
 
+
+
+## react-native-swiper 轮播图插件
+
+> GitHub：https://github.com/leecade/react-native-swiper
+
+### 安装 react-native-swiper
+
+```
+$ npm i react-native-swiper --save
 ```
 
+### 使用 react-native-swiper
+
+在 Home 首页使用 react-native-swiper 创建轮播图
+
+**注意：**使用 **轮播图组件** 时如果 **导航器** 开启了 **滑动切换** 与 **切换动画** 轮播图内的 **图片会不显示**
+
+```jsx
+// 导入轮播图插件
+import Swiper from 'react-native-swiper';
+······
+export default class Home extends Component {
+  render(){
+    return (
+      <View style={{flex:1,backgroundColor:'pink'}}>
+        {/* 头部 */}
+        { this.renderHeader() }
+        {/* 轮播图 */}
+        { this.renderSwiper() }
+      </View>
+    )
+  }
+  ······
+  /**
+   * renderSwiper(){ return } 渲染轮播图函数
+   * Swiper：轮播图组件
+   *  - height 类型（number）：组件高度
+   *  - loop 类型（boole）：如果设置为false，那么滑动到最后一张时，再次滑动将不会滑到第一张图片。
+   *  - autoplay 类型（boole）：自动轮播
+   *  - autoplayTimeout 类型（number）:每隔4秒切换
+   *  - horizontal 类型（number）：轮播图的滑动方向，水平方向，为false可设置为竖直方向
+   *  - paginationStyle 类型（object）：小圆点整体的样式
+   *  - showsButtons 类型（boole）：左右控制按钮，为false时不显示控制按钮
+   *  - showsPagination 类型（boole）：是否显示小圆点，为false不显示下方圆点
+   *  - dot 类型（组件）：未选中的圆点样式
+   *  - activeDot 类型（组件）：选中的圆点样式
+   * 注意：使用轮播图组件时如果导航器开启了滑动切换与切换动画轮播图内的图片会不显示
+   */
+  renderSwiper(){
+    return (
+      <View style={{height:160  }}>
+        <Swiper
+            height={160}
+            loop={true}
+            autoplay={true}
+            autoplayTimeout={4}
+            horizontal={true}
+            paginationStyle={{bottom: 10}}
+            showsButtons={false}
+            showsPagination={true}
+            dot={<View style={{
+                backgroundColor: 'rgba(255,255,255,.4)',
+                width: 6,
+                height: 6,
+                borderRadius: 3,
+                marginLeft: 2,
+                marginRight: 2,
+            }}/>}
+            activeDot={<View style={{
+                backgroundColor: 'rgba(255,255,255,.8)',
+                width: 14,
+                height: 6,
+                borderRadius: 3,
+                marginLeft: 2,
+                marginRight: 2,
+            }}/>}>
+            <ImgButton onPress={()=>{alert('点击了图1')}} source={ImgUrls.home_swiper_01} style={styles.swiperImg} />
+            <ImgButton onPress={()=>{alert('点击了图2')}} source={ImgUrls.home_swiper_02} style={styles.swiperImg} />
+            <ImgButton onPress={()=>{alert('点击了图3')}} source={ImgUrls.home_swiper_03} style={styles.swiperImg} />
+            <ImgButton onPress={()=>{alert('点击了图4')}} source={ImgUrls.home_swiper_04} style={styles.swiperImg} />
+        </Swiper>
+      </View>
+    )
+  }
+  ······
+｝
+  
+const styles = StyleSheet.create({ 
+  ······
+  /* 轮播图样式 */
+  swiperImg:{
+    width:'100%',
+    height: 160,
+    resizeMode :'stretch',
+  },
+  
+})
+```
+
+### 属性
+
+   * height 类型（number）：组件高度
+   * loop 类型（boole）：如果设置为false，那么滑动到最后一张时，再次滑动将不会滑到第一张图片。
+   * autoplay 类型（boole）：自动轮播
+   * autoplayTimeout 类型（number）:每隔4秒切换
+   * horizontal 类型（number）：轮播图的滑动方向，水平方向，为false可设置为竖直方向
+   * paginationStyle 类型（object）：小圆点整体的样式
+   * showsButtons 类型（boole）：左右控制按钮，为false时不显示控制按钮
+   * showsPagination 类型（boole）：是否显示小圆点，为false不显示下方圆点
+   * dot 类型（组件）：未选中的圆点样式
+   * activeDot 类型（组件）：选中的圆点样式

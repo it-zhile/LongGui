@@ -7,6 +7,8 @@
 import React, { Component } from 'react';
 // 导入 react-native 用来使用 ReactNative 里的内置组件
 import { Platfrom, Dimensions, StyleSheet, View, Text, Image, TextInput } from 'react-native';
+// 导入轮播图插件
+import Swiper from 'react-native-swiper';
 
 // 导入静态资源
 import { ImgUrls, Colors, CommonStyles, Contants } from '../../assets/';
@@ -41,6 +43,8 @@ export default class Home extends Component {
       <View style={{flex:1,backgroundColor:'pink'}}>
         {/* 头部 */}
         { this.renderHeader() }
+        {/* 轮播图 */}
+        { this.renderSwiper() }
       </View>
     )
   }
@@ -73,6 +77,62 @@ export default class Home extends Component {
       </View>
     )
   }
+
+  /**
+   * renderSwiper(){ return } 渲染轮播图函数
+   * Swiper：轮播图组件
+   *  - height 类型（number）：组件高度
+   *  - loop 类型（boole）：如果设置为false，那么滑动到最后一张时，再次滑动将不会滑到第一张图片。
+   *  - autoplay 类型（boole）：自动轮播
+   *  - autoplayTimeout 类型（number）:每隔4秒切换
+   *  - horizontal 类型（number）：轮播图的滑动方向，水平方向，为false可设置为竖直方向
+   *  - paginationStyle 类型（object）：小圆点整体的样式
+   *  - showsButtons 类型（boole）：左右控制按钮，为false时不显示控制按钮
+   *  - showsPagination 类型（boole）：是否显示小圆点，为false不显示下方圆点
+   *  - dot 类型（组件）：未选中的圆点样式
+   *  - activeDot 类型（组件）：选中的圆点样式
+   * 注意：使用轮播图组件时如果导航器开启了滑动切换与切换动画轮播图内的图片会不显示
+   */
+  renderSwiper(){
+    return (
+      <View style={{height:160  }}>
+        <Swiper
+            height={160}
+            loop={true}
+            autoplay={true}
+            autoplayTimeout={4}
+            horizontal={true}
+            paginationStyle={{bottom: 10}}
+            showsButtons={false}
+            showsPagination={true}
+            dot={<View style={{
+                backgroundColor: 'rgba(255,255,255,.4)',
+                width: 6,
+                height: 6,
+                borderRadius: 3,
+                marginLeft: 2,
+                marginRight: 2,
+            }}/>}
+            activeDot={<View style={{
+                backgroundColor: 'rgba(255,255,255,.8)',
+                width: 14,
+                height: 6,
+                borderRadius: 3,
+                marginLeft: 2,
+                marginRight: 2,
+            }}/>}>
+            <ImgButton onPress={()=>{alert('点击了图1')}} source={ImgUrls.home_swiper_01} style={styles.swiperImg} />
+            <ImgButton onPress={()=>{alert('点击了图2')}} source={ImgUrls.home_swiper_02} style={styles.swiperImg} />
+            <ImgButton onPress={()=>{alert('点击了图3')}} source={ImgUrls.home_swiper_03} style={styles.swiperImg} />
+            <ImgButton onPress={()=>{alert('点击了图4')}} source={ImgUrls.home_swiper_04} style={styles.swiperImg} />
+        </Swiper>
+      </View>
+    )
+  }
+
+
+
+
 
 
   /**
@@ -131,5 +191,18 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     tintColor: '#fff',
-  }
+  },
+
+
+
+  /* 轮播图样式 */
+  swiperImg:{
+    width:'100%',
+    height: 160,
+    resizeMode :'stretch',
+  },
+
+
+
+
 })
