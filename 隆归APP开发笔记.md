@@ -767,3 +767,8 @@ const styles = StyleSheet.create({
    * showsPagination 类型（boole）：是否显示小圆点，为false不显示下方圆点
    * dot 类型（组件）：未选中的圆点样式
    * activeDot 类型（组件）：选中的圆点样式
+
+
+
+## Home 首页静态页面完成
+

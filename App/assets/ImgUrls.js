@@ -33,6 +33,10 @@ const ImgUrls = {
   home_guang_02:require('./images/home/guang02.png'),
   home_guang_03:require('./images/home/guang03.png'),
   home_guang_04:require('./images/home/guang04.png'),
+  home_picture_01:require('./images/home/picture1.png'),
+  home_picture_02:require('./images/home/picture2.png'),
+  home_picture_03:require('./images/home/picture3.png'),
+  home_picture_04:require('./images/home/picture4.png'),
 }
 
 export default ImgUrls;

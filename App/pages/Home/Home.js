@@ -6,7 +6,7 @@
 // 导入 react 与 Component 用来创建组件
 import React, { Component } from 'react';
 // 导入 react-native 用来使用 ReactNative 里的内置组件
-import { Platfrom, Dimensions, StyleSheet, View, Text, Image, TextInput, ScrollView } from 'react-native';
+import { Platfrom, Dimensions, StyleSheet, View, Text, Image, TextInput, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 // 导入轮播图插件
 import Swiper from 'react-native-swiper';
 
@@ -30,7 +30,14 @@ export default class Home extends Component {
    */
   constructor(props) {
     super(props);
-    this.state = { };
+    this.state = { 
+      imgList:[ 
+        {imageUrl:ImgUrls.home_picture_01},
+        {imageUrl:ImgUrls.home_picture_02},
+        {imageUrl:ImgUrls.home_picture_03},
+        {imageUrl:ImgUrls.home_picture_04},
+      ]
+    };
   }
 
   /**
@@ -44,7 +51,7 @@ export default class Home extends Component {
         {/* 头部 */}
         { this.renderHeader() }
         {/* 滚动视图 */}
-        <ScrollView>
+        <ScrollView style={{marginBottom: -10,}}>
           {/* 轮播图 */}
           { this.renderSwiper() }
           {/* 首页逛一逛、闯一闯入口 */}
@@ -58,6 +65,8 @@ export default class Home extends Component {
           { this.renderFenLei() }
           {/* 闯一闯标题 */}
           {this.renderTitle('闯一闯',()=>{ alert('点击了闯一闯更多！')})}
+          {/* 闯一闯列表内容 */}
+          {this.renderList(this.state.imgList)}
         </ScrollView>
       </View>
     )
@@ -145,9 +154,9 @@ export default class Home extends Component {
   }
 
   /**
-   * renderTitle(title){ return() } 渲染标题
-   * title：接收传递进来的内容作为标题文本
-   * onpress：接收传递进来的事件
+   * renderTitle(title){ return() } 渲染标题函数
+   *  - title：接收传递进来的内容作为标题文本
+   *  - onpress：接收传递进来的事件
    */
   renderTitle(title,onpress){
     return (
@@ -165,7 +174,7 @@ export default class Home extends Component {
   }
 
   /**
-   * renderfenLei(){ return()} 渲染分类 
+   * renderfenLei(){ return()} 渲染分类函数
    */
   renderFenLei(){
     return (
@@ -190,6 +199,31 @@ export default class Home extends Component {
     )
   }
 
+  /**
+   * renderList(imgList){ return() }  渲染闯一闯列表内容函数
+   * FlatList：列表组件
+   *  - data 类型（Array）：要循环的数据，data属性目前只支持普通数组
+   *  - renderItem 类型（Function）: 根据行数据 data 渲染每一行的组件
+   *  - keyExtractor={(item, index) => index}：此函数用于为给定的item生成一个不重复的key
+   *     - Key的作用是使React能够区分同类元素的不同个体，以便在刷新时能够确定其变化的位置，减少重新渲染的开销。
+   *     - 若不指定此函数，则默认抽取item.key作为key值。
+   *     - 若item.key也不存在，则使用数组下标。 
+   */
+  renderList(imgList){
+    return (
+       <FlatList
+        data={imgList}
+        renderItem={({item}) => {
+          return (
+            <View style={styles.CLImgbox}>
+              <Image style={styles.CLImg}  source={item.imageUrl} />
+            </View>
+          ) 
+        }}
+        keyExtractor={(item,index) => index}
+      />
+    )
+  }
 
 
 
@@ -343,4 +377,24 @@ const styles = StyleSheet.create({
   },
 
 
+
+  /* 闯一闯列表内容 */
+  cList:{
+    flex: 1,
+  },
+  CLImgbox:{
+    flex: 1,
+    height: 130,
+    borderBottomWidth: 10,
+    borderColor: '#ccc',
+    // backgroundColor: '#00ff',
+    justifyContent:'center',
+    alignItems: 'center',
+  },
+  CLImg:{
+    width: '100%',
+    height: '100%',
+    resizeMode:'stretch',
+    backgroundColor:'blue',
+  },
 })
