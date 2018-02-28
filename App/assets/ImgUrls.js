@@ -6,6 +6,12 @@
 
 const ImgUrls = {
   /**
+   * common = 公用图片
+   */
+  common_back:require('./images/common/backIcon.png'),
+  common_more:require('./images/common/更多.png'),
+
+  /**
    * tabbar - 底部导航 
    */
   tabbar_home:require('./images/tabbar/首页-01.png'),
@@ -37,6 +43,8 @@ const ImgUrls = {
   home_picture_02:require('./images/home/picture2.png'),
   home_picture_03:require('./images/home/picture3.png'),
   home_picture_04:require('./images/home/picture4.png'),
+
+  
 }
 
 export default ImgUrls;
