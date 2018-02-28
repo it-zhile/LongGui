@@ -45,6 +45,11 @@ export default class Home extends Component {
         { this.renderHeader() }
         {/* 轮播图 */}
         { this.renderSwiper() }
+        {/* 首页逛一逛、闯一闯入口 */}
+        <View style={styles.gcEntry}>
+          <ImgButton style={styles.gcImg} source={ImgUrls.home_chuang} />
+          <ImgButton style={styles.gcImg} source={ImgUrls.home_guang} />
+        </View>
       </View>
     )
   }
@@ -203,6 +208,19 @@ const styles = StyleSheet.create({
   },
 
 
-
+  /* 首页逛一逛、闯一闯入口 */
+  gcEntry:{
+    height: 130,
+    paddingTop: 4,
+    paddingLeft: 4,
+    paddingRight: 4,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  gcImg:{
+    width: 175,
+    height:120,
+  },
 
 })

@@ -27,6 +27,8 @@ const ImgUrls = {
   home_swiper_02:require('./images/home/swripe02.png'),
   home_swiper_03:require('./images/home/swripe03.png'),
   home_swiper_04:require('./images/home/swripe04.png'),
+  home_chuang:require('./images/home/chuang01.png'),
+  home_guang:require('./images/home/guangyiguang01.png'),
 }
 
 export default ImgUrls;
