@@ -85,6 +85,39 @@ $ react-native run-android
 >
 > <https://reactnative.cn/docs/0.51/textinput.html#content>
 
+TextInput 为一个单标签
+
+```
+<TextInput
+  style={styles.ipt}
+  placeholder="请输入您要搜索的内容"
+  placeholderTextColor="#ccc"
+  underlineColorAndroid="transparent" 
+/>
+```
+
+#### 属性
+
+- **style** `类型（object）`
+  - 样式，本组件继承了所有Text的样式
+- **placeholder** `类型（string）` 
+  - 默认显示文本，如果没有任何文字输入，会显示此占位字符串。
+- **placeholderTextColor**：`类型（string）` 
+  - 占位字符串显示的文字颜色
+- `android` **underlineColorAndroid** `类型（string）` 
+  - 文本框的下划线颜色(译注：如果要去掉文本框的边框，请将此属性设为透明transparent)。
+
+#### 方法
+
+- **isFocused(): boolean** 
+  - 返回值表明当前输入框是否获得了焦点。
+
+
+- **clear()** 
+  - 清空输入框的内容。
+
+
+
 ### Image组件(图片)
 
 > 一个用于显示多种不同类型图片的React组件，包括网络图片、静态资源、临时的本地图片、以及本地磁盘上的图片（如相册）等。详细用法参阅[图片文档](https://reactnative.cn/docs/0.51/images.html)。
@@ -93,8 +126,8 @@ $ react-native run-android
 
 Image图片组件需要给定宽度否则不会显示，常用属性有 source，resizeMode
 
-- source属性：用来设置组件的图片路径
-- resizeMode属性：决定当组件尺寸和图片尺寸不成比例的时候如何调整图片的大小
+- **source**：用来设置组件的图片路径
+- **resizeMode**：决定当组件尺寸和图片尺寸不成比例的时候如何调整图片的大小
   - `cover`: 在保持图片宽高比的前提下缩放图片，直到宽度和高度都大于等于容器视图的尺寸（如果容器有padding内衬的话，则相应减去）。**译注**：这样图片完全覆盖甚至超出容器，容器中不留任何空白。
   - `contain`: 在保持图片宽高比的前提下缩放图片，直到宽度和高度都小于等于容器视图的尺寸（如果容器有padding内衬的话，则相应减去）。**译注**：这样图片完全被包裹在容器中，容器中可能留有空白
   - `stretch`: 拉伸图片且不维持宽高比，直到宽高都刚好填满容器。
@@ -168,7 +201,7 @@ const TabRouteConfigs = {
       tabBarLabel:'首页',
       tabBarIcon:({focused,tintColor})=>(
         <Image 
-          source = { focused ? ImgUrls.ic_tabbar_home_active : ImgUrls.ic_tabbar_home }
+          source = { focused ? ImgUrls.tabbar_home_active : ImgUrls.tabbar_home }
           style={[styles.icon,{tintColor:tintColor}]}
         />
       ) 
@@ -180,7 +213,7 @@ const TabRouteConfigs = {
       tabBarLabel:'截单',
       tabBarIcon:({focused,tintColor})=>(
         <Image 
-          source = { focused ? ImgUrls.ic_tabbar_jiedan_active : ImgUrls.ic_tabbar_jiedan }
+          source = { focused ? ImgUrls.tabbar_jiedan_active : ImgUrls.tabbar_jiedan }
           style={[styles.icon,{tintColor:tintColor}]}
         />
       )
@@ -192,7 +225,7 @@ const TabRouteConfigs = {
       tabBarLabel:'购物车',
       tabBarIcon:({focused,tintColor})=>(
         <Image 
-          source = { focused ? ImgUrls.ic_tabbar_shopcart_active : ImgUrls.ic_tabbar_shopcart }
+          source = { focused ? ImgUrls.tabbar_shopcart_active : ImgUrls.tabbar_shopcart }
           style={[styles.icon,{tintColor:tintColor}]}
         />
       )
@@ -204,7 +237,7 @@ const TabRouteConfigs = {
       tabBarLabel:'我的',
       tabBarIcon:({focused,tintColor})=>(
         <Image 
-          source = { focused ? ImgUrls.ic_tabbar_wode_active : ImgUrls.ic_tabbar_wode }
+          source = { focused ? ImgUrls.tabbar_mine_active : ImgUrls.tabbar_mine }
           style={[styles.icon,{tintColor:tintColor}]}
         />
       ) 
@@ -234,7 +267,7 @@ const TabNavigatorConfigs = {
   tabBarOptions: {
     activeTintColor:Colors.app_color,
     labelStyle: {
-      fontSize: 10,
+      fontSize: 12,
     },
   },
 }
@@ -286,7 +319,7 @@ export default Navigator;
 
 
 
-## 创建 ImgButton 公共组件
+## 创建公用组件 - ImgButton 
 
 > 在 `common` 文件夹下新建 `ImgButton.js` 文件
 
@@ -314,6 +347,34 @@ export default class ImageButton extends Component {
             </TouchableOpacity>
         )
     }
+}
+```
+
+
+
+## 创建公用组件 - TextButton
+
+> 在 `common` 文件夹下新建 `TextButton.js` 文件
+
+在项目中经常会使用到可以点击的 Text 文字，创建一个 TextButton 来复用
+
+```jsx
+/**
+ * Creactd by date on 2018/02/28
+ * Function: 可点击的 Text 组件
+ * Desc:
+ */
+import React, { Component } from 'react';
+import { TouchableOpacity, Text } from 'react-native';
+
+export default class TextButton extends Component{
+  render(){
+    return (
+      <TouchableOpacity onPress={ this.props.onPress } >
+        <Text style={ this.props.style } >{ this.props.text }</Text>
+      </TouchableOpacity>
+    )
+  }
 }
 ```
 

@@ -16,6 +16,13 @@ const ImgUrls = {
   tabbar_shopcart_active:require('./images/tabbar/购物车-active-01.png'),
   tabbar_mine:require('./images/tabbar/个人中心-01.png'),
   tabbar_mine_active:require('./images/tabbar/个人中心-active-01.png'),
+
+  /**
+   * home - 首页 
+   */
+  home_touxiang:require('./images/home/touxiang01.jpg'),
+  home_search:require('./images/home/放大镜-01.png'),
+  home_scanner:require('./images/home/扫码-01.png'),
   
 }
 
