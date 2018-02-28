@@ -391,19 +391,15 @@ export default class TextButton extends Component{
 // 导入 react 与 Component 用来创建组件
 import React, { Component } from 'react';
 // 导入 react-native 用来使用 ReactNative 里的内置组件
-import { StyleSheet, View, Text, Image, Dimensions, FlatList, TextInput, } from 'react-native';
-// 导入静态资源 
-import { ImgUrls, Colors, CommonStyles, Constants } from '../../assets/';
-// 导入公共自定义组件
-import { ImgButton } from '../../common/';
-
+import { Platfrom, Dimensions, StyleSheet, View, Text, Image, TextInput } from 'react-native';
+// 导入静态资源
+import { ImgUrls, Colors, CommonStyles, Contants } from '../../assets/';
+// 导入公用组件
+import { ImgButton, TextButton } from '../../common/';
 // 获取屏幕宽度
 const {width} = Dimensions.get('window');
-
-/**
- * 创建并返回一个名为 Home 的组件
- */
-export default class Home extends Component{
+/**  创建并返回一个名为 Home 的组件 */
+export default class Home extends Component {
   /**
    * constructor(props){}：
    * super(props)：
@@ -411,63 +407,49 @@ export default class Home extends Component{
    */
   constructor(props) {
     super(props);
-    this.state = {
-      imgList: null,
-    };
+    this.state = { };
   }
-
   /**
    * render(){}：渲染的内容，所有要显示的内容必须放在 render 函数内
    * return()：如果只有一个标签可以不用()，多个标签必需使用否则报错
+   * View：相当于 html 里的 div 标签
    */
   render(){
     return (
-      /** 
-       * View 组件的使用，View 简单来说就相当于 html 里的 div 标签
-       * 以标签的形式写在 return 里，注意：每个组件里需使用 View 组件包裹
-       * 通过 style={} 来给组件设置样式，注意：style内需是一个对象
-       * 内嵌样式: style={{key:value,key:value}}
-       * StyleSheet: style={styles.h1}
-       */
-      <View style={CommonStyles.container} >
-        {/* 首页头部导航 */}
-        {this.renderHeader()}
-
+      <View style={{flex:1,backgroundColor:'pink'}}>
+        {/* 头部 */}
+        { this.renderHeader() }
       </View>
     )
   }
-
   /**
-   * 首页头部导航
+   * renderHeader(){ return() } 渲染头部函数
+   * Image：图片组件
+   *  - source：图片的地址路径，本地图片需使用 require() 方法来引入图片路径 source={require('../image/01.jpg')}
+   * ImgButton：自定义可点击的 Image 公用组件
+   *  - onPress 类型（function）：点击事件
+   * TextInput：输入框组件
+   *  - placeholder 类型（string）：默认显示文本，如果没有任何文字输入，会显示此占位字符串。
+   *  - placeholderTextColor 类型（string）：占位字符串显示的文字颜色
+   *  - underlineColorAndroid 类型（string）：文本框的下划线颜色，如要去掉将此属性设为透明 transparent 
    */
   renderHeader(){
     return(
-      <View style={styles.headerBox} >
-        <ImgButton
-          onPress={()=>this._navigate('Mine')}
-          style={styles.touxiang} 
-          source={ImgUrls.home_touxiang} 
-        />
-
-        <View style={styles.iptbox} >
-          <TextInput 
-            underlineColorAndroid="transparent"
-            placeholder="请输入你要搜索的内容..."
+      <View style={styles.header} >
+        <ImgButton onPress={()=>{ this._navigate('Mine') }} source={ ImgUrls.home_touxiang } style={styles.touxiang} />
+        <View style={styles.search}>
+          <TextInput
+            style={styles.ipt}
+            placeholder="请输入您要搜索的内容"
             placeholderTextColor="#ccc"
-            style={styles.ipt} />
-          <Image 
-            style={styles.iconSearch} 
-            source={ImgUrls.home_search} /> 
+            underlineColorAndroid="transparent" 
+          />
+          <Image source={ ImgUrls.home_search } style={ styles.iconSearch } /> 
         </View>
-        <ImgButton 
-          onPress={() => this._navigate('Scanner') }
-          style={{width:24,height:24,}}
-          source={ImgUrls.home_saoma}
-        />
+        <ImgButton onPress={()=>{ this._navigate('Scanner') }} source={ ImgUrls.home_scanner} style={styles.iconScanner} />
       </View>
     )
   }
-
   /**
    * 页面跳转事件
    * 通过 this.props.navigation 接收从主入口 index.js 里传递过来的 navigation 属性用来跳转页面
@@ -476,51 +458,53 @@ export default class Home extends Component{
     const { navigate } = this.props.navigation;
     navigate(screen);
   }
-
 }
-
 /**
  * StyleSheet.create({})：创建多个样式对象
  */ 
-const styles = StyleSheet.create({
-  /* 首页头部导航 */
-  headerBox:{
+const styles = StyleSheet.create({ 
+  /* 头部样式 */
+  header:{
     height: 40,
-    backgroundColor:Colors.app_color,
+    backgroundColor: Colors.app_color,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingLeft: 10,
     paddingRight: 10,
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent: 'space-between',
   },
   touxiang:{
     width: 30,
     height: 30,
-    borderRadius: 15,
+    borderRadius: 17,
   },
-  iptbox:{
-    width: 240,
+  search:{
+    width: 260,
     height: 26,
-    flexDirection: 'row',
     position: 'relative',
-  },  
+  },
   ipt:{
-    color: '#fff',
-    width: 240,
-    height: 26,
+    flex: 1,
     borderWidth: 1,
     borderColor: '#fff',
-    borderRadius: 4,
+    borderRadius: 6,
     padding: 0,
-    paddingLeft:24,
+    paddingLeft: 24,
   },
   iconSearch:{
-    width: 18,
-    height: 18,
+    width: 16,
+    height: 16,
+    tintColor: '#ccc',
     position: 'absolute',
-    top: 4,
     left: 4,
+    top: '50%',
+    marginTop: -8,
   },
+  iconScanner:{
+    width: 24,
+    height: 24,
+    tintColor: '#fff',
+  }
 })
 ```
 
