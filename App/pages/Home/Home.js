@@ -6,7 +6,7 @@
 // 导入 react 与 Component 用来创建组件
 import React, { Component } from 'react';
 // 导入 react-native 用来使用 ReactNative 里的内置组件
-import { Platfrom, Dimensions, StyleSheet, View, Text, Image, TextInput } from 'react-native';
+import { Platfrom, Dimensions, StyleSheet, View, Text, Image, TextInput, ScrollView } from 'react-native';
 // 导入轮播图插件
 import Swiper from 'react-native-swiper';
 
@@ -43,13 +43,22 @@ export default class Home extends Component {
       <View style={{flex:1,backgroundColor:'pink'}}>
         {/* 头部 */}
         { this.renderHeader() }
-        {/* 轮播图 */}
-        { this.renderSwiper() }
-        {/* 首页逛一逛、闯一闯入口 */}
-        <View style={styles.gcEntry}>
-          <ImgButton style={styles.gcImg} source={ImgUrls.home_chuang} />
-          <ImgButton style={styles.gcImg} source={ImgUrls.home_guang} />
-        </View>
+        {/* 滚动视图 */}
+        <ScrollView>
+          {/* 轮播图 */}
+          { this.renderSwiper() }
+          {/* 首页逛一逛、闯一闯入口 */}
+          <View style={styles.gcEntry}>
+            <ImgButton style={styles.gcImg} source={ImgUrls.home_chuang} />
+            <ImgButton style={styles.gcImg} source={ImgUrls.home_guang} />
+          </View>
+          {/* 逛一逛标题 */}
+          {this.renderTitle('逛一逛',()=>{ alert('点击了逛一逛标题的更多！')})}
+          {/* 分类 */}
+          { this.renderFenLei() }
+          {/* 闯一闯标题 */}
+          {this.renderTitle('闯一闯',()=>{ alert('点击了闯一闯更多！')})}
+        </ScrollView>
       </View>
     )
   }
@@ -135,6 +144,51 @@ export default class Home extends Component {
     )
   }
 
+  /**
+   * renderTitle(title){ return() } 渲染标题
+   * title：接收传递进来的内容作为标题文本
+   * onpress：接收传递进来的事件
+   */
+  renderTitle(title,onpress){
+    return (
+      <View style={styles.TitleBox}>
+        <View style={styles.title} >
+          <View style={[styles.TitleBoxIcon,{borderTopLeftRadius: 2,borderBottomLeftRadius: 2,}]}></View>
+          <Text style={styles.TitleText}>{title}</Text>
+          <View style={[styles.TitleBoxIcon,{borderTopRightRadius: 2,borderBottomRightRadius: 2,}]}></View>
+        </View>
+        <View style={styles.TitleBoxRight} >
+          <TextButton onPress={ onpress } style={styles.TitleRightText} text="更多 >"/>
+        </View>
+      </View>
+    )
+  }
+
+  /**
+   * renderfenLei(){ return()} 渲染分类 
+   */
+  renderFenLei(){
+    return (
+      <View style={styles.fenleiBox}>
+        <View style={[styles.fenleiTopBottom,CommonStyles.borderBottom1,CommonStyles.borderColor_ccc]} >
+          <View style={{flex:1}}>
+            <ImgButton style={styles.fenleiImg} source={ImgUrls.home_guang_01} />
+          </View>
+          <View style={[CommonStyles.borderLeft1,CommonStyles.borderColor_ccc,{flex:1}]}>
+            <ImgButton style={styles.fenleiImg} source={ImgUrls.home_guang_02} />
+          </View>
+        </View>
+        <View style={styles.fenleiTopBottom} >
+          <View style={{flex:1}}>
+            <ImgButton style={styles.fenleiImg} source={ImgUrls.home_guang_03} />
+          </View>
+          <View style={[CommonStyles.borderLeft1,CommonStyles.borderColor_ccc,{flex:1}]}>
+            <ImgButton style={styles.fenleiImg} source={ImgUrls.home_guang_04} />
+          </View>
+        </View>
+      </View>
+    )
+  }
 
 
 
@@ -200,12 +254,15 @@ const styles = StyleSheet.create({
 
 
 
+
   /* 轮播图样式 */
   swiperImg:{
     width:'100%',
     height: 160,
     resizeMode :'stretch',
   },
+
+
 
 
   /* 首页逛一逛、闯一闯入口 */
@@ -217,10 +274,73 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+    backgroundColor: Colors.white_fff,
   },
   gcImg:{
     width: 175,
     height:120,
   },
+
+
+
+  /* 逛一逛标题 */
+  TitleBox:{
+    height: 44,
+    paddingLeft: 10,
+    paddingRight: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent:'center',
+    backgroundColor: Colors.white_fff,
+    position: 'relative',
+  },
+  title:{
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  TitleText:{
+    paddingLeft: 4,
+    paddingRight: 4,
+    fontSize: 16,
+    color: '#474747',
+  },
+  TitleBoxIcon:{
+    width: 14,
+    height: 4,
+    backgroundColor: '#474747',
+  },
+  TitleBoxRight:{
+    position: 'absolute',
+    right: 10,
+    top: '50%',
+    marginTop: -8,
+  },
+  TitleRightText:{
+    color: Colors.app_color,
+    fontSize: 12,
+  },
+
+
+
+  /* 分类 */
+  fenleiBox:{
+    height: 216,
+    borderTopWidth: 10,
+    borderBottomWidth: 10,
+    borderColor: '#f1f1f1',
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: Colors.white_fff,
+  },
+  fenleiTopBottom:{
+    flex: 1,
+    flexDirection: 'row',
+  },
+  fenleiImg:{
+    width: '100%',
+    height: '100%',
+    resizeMode:'stretch',
+  },
+
 
 })

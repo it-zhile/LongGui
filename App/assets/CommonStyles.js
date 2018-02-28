@@ -5,6 +5,21 @@
  */
 const CommonStyles = {
 
+  borderTop1:{
+    borderTopWidth: 1,
+  },
+  borderBottom1:{
+    borderBottomWidth: 1,
+  },
+  borderLeft1:{
+    borderLeftWidth: 1,
+  },
+  borderRight1:{
+    borderRightWidth: 1,
+  },
+  borderColor_ccc:{
+    borderColor: '#ccc',
+  },
 }
 
 export default CommonStyles;
