@@ -6,6 +6,8 @@
 import React,{ Component } from 'react';
 import { View, Text, } from 'react-native';
 
+// import { RNCamera } from 'react-native-camera';
+
 export default class Scanner extends Component{
   render(){
     return(

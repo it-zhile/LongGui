@@ -512,6 +512,8 @@ const styles = StyleSheet.create({
 
 ## react-native-camera 相机插件
 
+> GitHub：https://github.com/react-native-community/react-native-camera
+
 ### 安装 react-native-camera
 
 执行命令
@@ -527,9 +529,9 @@ $ react-native link react-native-camera
 
 ### 使用 RNCamera
 
-> GitHub: <https://github.com/react-native-community/react-native-camera/blob/master/docs/RNCamera.md>
+> GitHub RNCamera示例： <https://github.com/react-native-community/react-native-camera/blob/master/docs/RNCamera.md>
 
-只需 `import { RNCamera } from react-native-camera` 模块中 取出 `<RNCamera/>` 标签即可。
+只需 `import { RNCamera } from 'react-native-camera'; ` 模块中取出 `<RNCamera/>` 标签即可。
 
 ### Android配置相机插件
 
