@@ -5,6 +5,10 @@
  */
 const CommonStyles = {
 
+  container:{
+    flex:1,
+    backgroundColor: '#fff',
+  },
   borderTop1:{
     borderTopWidth: 1,
   },

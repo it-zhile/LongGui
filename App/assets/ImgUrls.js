@@ -44,6 +44,10 @@ const ImgUrls = {
   home_picture_03:require('./images/home/picture3.png'),
   home_picture_04:require('./images/home/picture4.png'),
 
+  /**
+   * jiedan - 截单 
+   */
+  jiedan_qiang:require('./images/jiedan/qiang.png')
   
 }
 
