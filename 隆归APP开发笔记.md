@@ -1609,3 +1609,55 @@ const styles = StyleSheet.create({
  })
 ```
 
+ 
+
+## React Native修改APP名称与图标
+
+> 不管是修改 app 名称还是图标，都需重新生成新的 debug版，最重要的一步是删除 `android` => `app` 目录下 `build` 目录，否则安装报错。
+
+### 修改 APP 名称
+
+**找到读取 app_name 的地方**
+
+- 进入 `android` => `app` => `src` => `main` => `AndroidManifest.xml` 文件
+- 找到 `android:label=”@string/app_name”` 这个对应的就是APP的名称。
+  - @string类似于定义好的变量，直接调取即可。
+
+**修改app的名称**
+
+- 进入 `android` => `app` => `src` => `main` => `res` => `valuse` => `strings.xml`  文件，修改即可：
+
+```xml
+<resources>
+    <string name="app_name">你的APP名称</string>
+</resources>
+```
+
+### 修改 APP 的图标
+
+**找到读取 app 图标的地方**
+
+- 进入目录 `android` => `app` => `src` => `main` => `AndroidManifest.xml` 文件
+- 找到 `android:icon=”@mipmap/ic_launcher”` 这里的 `ic_launcher` 就是默认的图标名称
+  - 这里也是从其他地方引用的，因此需要在被引用的地方修改
+
+**修改 app 图标** 
+
+- 进入目录 `android` => `app` => `src` => `main` => `res` => `mipmap–xxx` 文件夹
+  - **注意：**这里可能是 `mipmap-xxx`，也可能是 `drawable-xxx` ，我这里是 `mipmap`，只需要保持一致即可
+  - 如果是 `mipmap-xxx`，则 `android:icon=”@mipmap/ic_launcher”` 
+  - 如果是 `drawable-xxx`，则 `android:icon=”@drawable/ic_launcher”`
+
+
+- 这里面的图标大小都不一样，但是名字是一样的
+- 图标大小分为 `48x48` ，`72x72` ， `96x96` ， `144x144` 适配安卓不同机型
+
+只需要将图标放入这四个文件夹里面，在读取 `app` 图标的地方修改引用地址名称既可修改 `app` 图标
+
+### 重新生成新的 debug
+
+- 进入 `android` => `app` 目录下，删除掉 `build` 目录 
+- 重新执行 `react-native run-android`
+- 生成新的 `debug版` 安装到模拟器上，就能看到修改后的 APP名字 和 图标 了
+
+**注意：以上不管是修改 app 名称还是图标都需重新生成新的 debug版，最重要的一步是删除 build 目录**
