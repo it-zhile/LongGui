@@ -47,7 +47,7 @@ export default class Home extends Component {
    */
   render(){
     return (
-      <View style={{flex:1,backgroundColor:'pink'}}>
+      <View style={{flex:1,backgroundColor:'#fff'}}>
         {/* 头部 */}
         { this.renderHeader() }
         {/* 滚动视图 */}

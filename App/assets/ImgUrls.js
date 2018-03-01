@@ -47,7 +47,12 @@ const ImgUrls = {
   /**
    * jiedan - 截单 
    */
-  jiedan_qiang:require('./images/jiedan/qiang.png')
+  jiedan_qiang:require('./images/jiedan/qiang.png'),
+
+  /**
+   * shopcart - 购物车 
+   */
+  shopcart_nullshopcart:require('./images/shopcart/gouwuche.png'),
   
 }
 
