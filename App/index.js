@@ -19,6 +19,8 @@ import JieDan from './pages/JieDan/JieDan';
 import ShopCart from './pages/ShopCart/ShopCart';
 import Mine from './pages/Mine/Mine';
 
+import HomeChuang from './pages/Home/HomeChuang';
+
 /**
  * StyleSheet.create：创建样式对象
  * Platform.OS：用来判断运行平台是否为 ios
@@ -127,6 +129,7 @@ const Tab = TabNavigator(TabRouteConfigs,TabNavigatorConfigs);
 const StackRouteConfigs = {
   Tab: { screen: Tab },
   Scanner: { screen: Scanner },
+  HomeChuang: { screen: HomeChuang },
 };
 /**
  * StackNavigatorConfig：导航器配置

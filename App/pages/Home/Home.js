@@ -56,7 +56,7 @@ export default class Home extends Component {
           { this.renderSwiper() }
           {/* 首页逛一逛、闯一闯入口 */}
           <View style={styles.gcEntry}>
-            <ImgButton style={styles.gcImg} source={ImgUrls.home_chuang} />
+            <ImgButton onPress={()=>{ this._navigate('HomeChuang') }} style={styles.gcImg} source={ImgUrls.home_chuang} />
             <ImgButton style={styles.gcImg} source={ImgUrls.home_guang} />
           </View>
           {/* 逛一逛标题 */}

@@ -5,5 +5,6 @@
  *       所有组件必须通过这个类导出一遍才能在其他类中调用
  */
 import NavTop from './NavTop';
+import HeaderSearch from './HeaderSearch';
 
-export { NavTop, }
+export { NavTop, HeaderSearch };
