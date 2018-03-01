@@ -22,6 +22,7 @@ export default class HeaderSearch extends Component{
             style={styles.ipt}
             placeholderTextColor="#fff"
             underlineColorAndroid="transparent" 
+            onFocus={this.props.onFocus}
           />
           <Image source={ ImgUrls.home_search } style={ styles.iconSearch } /> 
         </View>

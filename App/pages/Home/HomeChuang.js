@@ -15,7 +15,10 @@ export default class HomeChuang extends Component{
   render(){
     return(
       <View style={{flex:1,backgroundColor:"pink"}}>
-        <HeaderSearch onPress={()=>{this._navigate('Mine')}} />
+        <HeaderSearch 
+          onPress={()=>{this._navigate('Mine')}}
+          onFocus={()=>{this._navigate('ShopCart')}}
+        />
       </View>
     )
   }
