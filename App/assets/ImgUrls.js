@@ -53,6 +53,29 @@ const ImgUrls = {
    * shopcart - 购物车 
    */
   shopcart_nullshopcart:require('./images/shopcart/gouwuche.png'),
+
+  /**
+   * mine - 个人中心页面 
+   */
+  mine_bcgcolor_red:require('./images/mine/touyuan.png'),
+  mine_card:require('./images/mine/card.png'),
+  mine_shopping:require('./images/mine/shopping.png'),
+  mine_fenlei_01:require('./images/mine/fenlei01.png'),
+  mine_fenlei_02:require('./images/mine/fenlei02.png'),
+  mine_fenlei_03:require('./images/mine/fenlei03.png'),
+  mine_fenlei_04:require('./images/mine/fenlei04.png'),
+  mine_fenlei_05:require('./images/mine/fenlei05.png'),
+  mine_icon_01:require('./images/mine/tobiao01.png'),
+  mine_icon_02:require('./images/mine/tobiao02.png'),
+  mine_icon_03:require('./images/mine/tobiao03.png'),
+  mine_icon_04:require('./images/mine/tobiao04.png'),
+  mine_icon_05:require('./images/mine/tobiao05.png'),
+  mine_icon_06:require('./images/mine/tobiao06.png'),
+  mine_icon_07:require('./images/mine/tobiao07.png'),
+  mine_icon_08:require('./images/mine/tobiao08.png'),
+  mine_icon_09:require('./images/mine/tobiao09.png'),
+  mine_icon_10:require('./images/mine/tobiao10.png'),
+  
   
 }
 
