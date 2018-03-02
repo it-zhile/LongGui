@@ -57,7 +57,7 @@ export default class Home extends Component {
           {/* 首页逛一逛、闯一闯入口 */}
           <View style={styles.gcEntry}>
             <ImgButton onPress={()=>{ this._navigate('HomeChuang') }} style={styles.gcImg} source={ImgUrls.home_chuang} />
-            <ImgButton style={styles.gcImg} source={ImgUrls.home_guang} />
+            <ImgButton onPress={()=>{ this._navigate('HomeGuang') }} style={styles.gcImg} source={ImgUrls.home_guang} />
           </View>
           {/* 逛一逛标题 */}
           {this.renderTitle('逛一逛',()=>{ alert('点击了逛一逛标题的更多！')})}

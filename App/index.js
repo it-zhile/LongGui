@@ -18,8 +18,9 @@ import Home from './pages/Home/Home';
 import JieDan from './pages/JieDan/JieDan';
 import ShopCart from './pages/ShopCart/ShopCart';
 import Mine from './pages/Mine/Mine';
-
+// 子页面
 import HomeChuang from './pages/Home/HomeChuang';
+import HomeGuang from './pages/Home/HomeGuang';
 
 /**
  * StyleSheet.create：创建样式对象
@@ -130,6 +131,7 @@ const StackRouteConfigs = {
   Tab: { screen: Tab },
   Scanner: { screen: Scanner },
   HomeChuang: { screen: HomeChuang },
+  HomeGuang: { screen: HomeGuang },
 };
 /**
  * StackNavigatorConfig：导航器配置
