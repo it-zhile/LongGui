@@ -34,12 +34,8 @@ export default class HomeChuang extends Component{
    * componentDidMount() 方法中的子组件在父组件之前执行 
    * 从这个函数开始，就可以和 JS 其他框架交互了，例如设置计时 setTimeout 或者 setInterval，或者发起网络请求
    */
-  componentWillMount() { 
+  componentDidMount() { 
     this._getList();
-    this._getCateList();
-    this._getEducationList();
-    this._getGrouponList();
-    this._getTrainList();
   }
 
   render(){
@@ -132,54 +128,36 @@ export default class HomeChuang extends Component{
     fetch(Contants.MockAai+"GET/api/chuang",{ method: 'GET' })
       .then((response) => response.json())
       .then((responseJson) => {
-        this.setState({list:responseJson.data})
+        var arr1 = [];
+        var arr2 = [];
+        var arr3 = [];
+        var arr4 = [];
+        responseJson.data.map((item)=>{
+          if(item.typeID === 1){
+            arr1.push(item)
+          }else if(item.typeID === 2){
+            arr2.push(item)
+          }else if(item.typeID === 3){
+            arr3.push(item)
+          }else if(item.typeID === 4){
+            arr4.push(item)
+          }
+        })
+        this.setState({
+          list:responseJson.data,
+          cateList:arr1,
+          grouponList:arr2,
+          educationList:arr3,
+          trainList:arr4,
+        });
+        console.log(this.state.list);
+        console.log(this.state.cateList);
+        console.log(this.state.grouponList);
+        console.log(this.state.educationList);
+        console.log(this.state.trainList);
       })
       .catch((error) => {
         console.error("闯一闯页面请求失败！！！");
-      }
-    );
-  }
-  _getCateList(){
-    fetch(Contants.MockAai+"GET/api/chuang/cate",{ method: 'GET' })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({cateList:responseJson.data})
-      })
-      .catch((error) => {
-        console.error("闯一闯页面食品请求失败！！！");
-      }
-    );
-  }
-  _getGrouponList(){
-    fetch(Contants.MockAai+"GET/api/chuang/groupon",{ method: 'GET' })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({grouponList:responseJson.data})
-      })
-      .catch((error) => {
-        console.error("闯一闯页面团购请求失败！！！");
-      }
-    );
-  }
-  _getEducationList(){
-    fetch(Contants.MockAai+"GET/api/chuang/education",{ method: 'GET' })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({educationList:responseJson.data})
-      })
-      .catch((error) => {
-        console.error("闯一闯页面教育请求失败！！！");
-      }
-    );
-  }
-  _getTrainList(){
-    fetch(Contants.MockAai+"GET/api/chuang/train",{ method: 'GET' })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({trainList:responseJson.data})
-      })
-      .catch((error) => {
-        console.error("闯一闯页面食品请求失败！！！");
       }
     );
   }
