@@ -1289,6 +1289,28 @@ export default class JieDan extends Component {
  ······
 ```
 
+### 属性
+
+- **renderTabBar** *（Function：ReactComponent）* - 接受1个参数，`props`并返回一个组件作为标签栏。该组件有`goToPage`，`tabs`，`activeTab`并 `ref`加入道具，并应落实`setAnimationValue`到能够自己与标签内容一起制作动画。您可以手动将其传递`props`给TabBar组件。
+- `tabBarPosition`（字符串）默认为 `"top"`
+  - `"bottom"` 将标签栏放置在内容下方。
+  - `"overlayTop"`或者`"overlayBottom"`覆盖内容的半透明标签栏。自定义选项卡栏必须在其外部元素上使用样式道具以支持此功能：`style={this.props.style}`。
+- **onChangeTab** *（函数）* - 当选项卡更改时调用的函数应该接受1个参数，该参数是包含两个键的对象：：`i`选择的选项卡的索引，`ref`：选定的选项卡的参考
+- **onScroll** *（功能）* - 页面滑动时调用的函数应该接受1个参数，该参数是表示幻灯片框架中页面位置的浮点数。
+- **locked** *（Bool）* - 禁用水平拖动以在选项卡之间滚动，默认为false。
+- **initialPage** *（整数）* - 最初选择的选项卡的索引，默认为0 ===第一个选项卡。
+- **page** *（整数）* - 设置选定的选项卡（参见 [＃126](https://github.com/brentvatne/react-native-scrollable-tab-view/issues/126)）
+- **children** *（ReactComponents）* - 每个顶级子组件都应该有一个`tabLabel`可以被标签栏组件用来渲染标签的道具。默认的标签栏希望它是一个字符串，但是如果你制作一个自定义标签栏，你可以使用任何你想要的东西。
+- **tabBarUnderlineStyle** *（View.propTypes.style）* - 默认选项卡栏下划线的样式。
+- **tabBarBackgroundColor** *（字符串）* - 默认标签栏背景的颜色，默认为`white`
+- **tabBarActiveTextColor** *（字符串）* - 活动时默认标签栏文本的颜色，默认为`navy`
+- **tabBarInactiveTextColor** *（字符串）* - 不活动时默认标签栏文本的颜色，默认为`black`
+- **tabBarTextStyle** *（对象）* - 标签栏文本的其他样式。例：`{fontFamily: 'Roboto', fontSize: 15}`
+- **style** *（View.propTypes.style）*
+- **contentProps** *（对象）* - 适用于root `ScrollView` / 的道具 `ViewPagerAndroid` 。请注意，由库设置的覆盖默认值可能会破坏功能; 详情请参阅源文件。
+- **scrollWithoutAnimation** *（布尔）* - 在选项卡上按下更改选项卡没有动画。
+- **prerenderingSiblingsNumber** *（整数）* - 预先渲染附近的＃兄弟，`Infinity`===渲染所有兄弟，默认为0 ===渲染当前页面。
+
 
 
 ## JieDan 截单静态页面完成
@@ -2258,6 +2280,274 @@ const styles = StyleSheet.create({
   btnText:{
     color: Colors.app_color_yellow,
   }
+})
+```
+
+
+
+## HomeGuang 逛一逛页面完成 
+
+在 pages 目录下新建 HomeGuang .js 文件，此页面为首页点击闯一闯后跳转的子页面
+
+```jsx
+/**
+ * Created by date on 2018/03/02
+ * Function: 逛一逛页面 
+ * Desc:
+ */
+import React, { Component } from 'react';
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
+
+import { ImgUrls, Colors, CommonStyles, Contants } from '../../assets/';
+import { HeaderSearch } from '../../components/';
+import { ImgButton } from '../../common/';
+// 导入 tab栏 插件
+import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
+
+export default class HomeGuang extends Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      list: [],           // 全部数据
+      womenList: [],      // 女装数据
+      menList: [],        // 男装数据
+      teaList: [],        // 茶叶数据
+      liquorList: [],     // 酒类数据
+      appliancesList: [], // 小家电数据
+      
+    }
+  }
+
+  /**
+   * 生命周期 componentDidMount 
+   * componentDidMount() 在初始化render之后只执行一次，在这个方法内，可以访问任何组件，
+   * componentDidMount() 方法中的子组件在父组件之前执行 
+   * 从这个函数开始，就可以和 JS 其他框架交互了
+   * 例如设置计时 setTimeout 或者 setInterval，或者发起网络请求
+   */
+  componentDidMount() { 
+    this._getList();
+  }
+
+  render(){
+    return(
+      <View style={{flex:1,backgroundColor:"#fff"}} >
+        {/* 头部搜索 */}
+        <HeaderSearch 
+          onPress={()=>{this._navigate('Mine')}}
+          onFocus={()=>{this._navigate('ShopCart')}}
+        />
+        {
+          /*
+           * ScrollableTabView：tab 栏插件 
+           *  - initialPage：初始化时被选中的Tab下标，默认是0（即第一页）。
+           *  - locked：是否能拖动视图，默认为false（表示可以拖动）
+           *  - tabBarActiveTextColor：选中时标签栏文本的颜色，默认为navy
+           *  - tabBarInactiveTextColor：未选中时标签栏文本的颜色，默认为black
+           *  - tabBarTextStyle：标签栏文本的其他样式。例：{fontFamily: 'Roboto', fontSize: 15}
+           *  - tabBarUnderlineStyle：默认选项卡栏下划线的样式。
+           *  - renderTabBar：TabBar的样式，系统提供了两种DefaultTabBar和ScrollableTabBar
+           *     - DefaultTabBar：Tab会平分在水平方向的空间（默认）
+           *     - ScrollableTabBar：Tab可以超过屏幕范围，滚动可以显示。
+           */
+        }
+        <ScrollableTabView
+          initialPage={0}
+          locked={false}
+          tabBarActiveTextColor={Colors.app_color}
+          tabBarInactiveTextColor='#ccc'
+          tabBarTextStyle={{fontSize:14,}}   
+          tabBarUnderlineStyle={{backgroundColor:Colors.app_color}}  
+          renderTabBar={() => <ScrollableTabBar />} >
+          {/* 云端仓储 */}
+          <View style={CommonStyles.container} tabLabel="云端仓储">
+            { this.renderList(this.state.list) }
+          </View>
+          {/* 女装 */}
+          <View style={CommonStyles.container} tabLabel="女装">
+            { this.renderList(this.state.womenList) }
+          </View>
+          {/* 男装 */}
+          <View style={CommonStyles.container} tabLabel="男装">
+            { this.renderList(this.state.menList) }
+          </View>
+          {/* 茶叶 */}
+          <View style={CommonStyles.container} tabLabel="茶叶">
+            { this.renderList(this.state.teaList) }
+          </View>
+          {/* 酒类 */}
+          <View style={CommonStyles.container} tabLabel="酒类">
+            { this.renderList(this.state.liquorList) }
+          </View>
+          {/* 小家电 */}
+          <View style={CommonStyles.container} tabLabel="小家电">
+            { this.renderList(this.state.appliancesList) }
+          </View>
+
+        </ScrollableTabView>
+      </View>
+    )
+  }
+
+  /** renderList(){return()} 渲染列表函数 */
+  renderList(list){
+    return(
+      <ScrollView>
+        { list.map((item,i,arr)=>{
+          return(
+            <View key={i} style={styles.list} >
+              <ImgButton source={{uri:item.img}} style={styles.icon} />
+              <View style={styles.listRight} >
+                <Text style={styles.name} numberOfLines={2}>{item.name}</Text>
+                <View style={styles.zhuan} >
+                  <Text style={{fontSize: 10,fontWeight:"700"}} >消费·赚<Text style={{color:Colors.app_color_yellow}}>￥{item.price_xiaofei}</Text></Text>
+                  <Text style={{fontSize: 10,fontWeight:"700"}} >推广·赚<Text style={{color:Colors.app_color_yellow}}>￥{item.price_tuiguang}</Text></Text>
+                  <Text style={{fontSize: 10,fontWeight:"700"}} >代理·赚<Text style={{color:Colors.app_color_yellow}}>￥{item.price_daili}</Text></Text>
+                </View>
+                <View style={styles.listBottom} >
+                  <Text style={{color:Colors.app_color,fontSize:18}} >￥{item.price}</Text>
+                  <TouchableOpacity onPress={()=>{this._changeStates(item.ID)}} style={item.states?styles.btn:styles.btn2} >
+                    <Text style={item.states?styles.btnText:styles.btnText2} >{item.states?'上架':'下架'}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          )
+        })}
+      </ScrollView>
+    )
+  }
+  /** 页面跳转 */
+  _navigate(screen){
+    const {navigate} = this.props.navigation;
+    navigate(screen)
+  }
+  /** 获取数据 */
+  _getList(){
+    fetch(Contants.MockAai+"GET/api/guang",{ method:'GET'})
+    .then((response)=> response.json())
+    .then((responseJson)=>{
+      console.log(responseJson)
+      var arr1 = [];
+      var arr2 = [];
+      var arr3 = [];
+      var arr4 = [];
+      var arr5 = [];
+      responseJson.data.map((item)=>{
+        if(item.typeID === 1){
+          arr1.push(item)
+        }else if(item.typeID === 2){
+          arr2.push(item)
+        }else if(item.typeID === 3){
+          arr3.push(item)
+        }else if(item.typeID === 4){
+          arr4.push(item)
+        }else if(item.typeID === 5){
+          arr5.push(item)
+        }
+      })
+      this.setState({
+        list: responseJson.data,
+        womenList: arr1,
+        menList: arr2,
+        teaList: arr3,
+        liquorList: arr4,
+        appliancesList: arr5,
+      })
+    })
+  }
+
+  /**
+   * _changeStates(ID){} 改变上下架状态
+   *  1.0 将当前点击的ID值入
+   *  2.0 存储要遍历的数据
+   *  3.0 遍历数据判断每项的ID是不相等全传入的ID
+   *  4.0 如果相等则对当前项的states值进行取反
+   *  5.0 将改变后的list数据重新赋值到state状态的原数据 
+   */
+  _changeStates(ID){
+    var list = this.state.list;
+    list.map((item)=>{
+      if(item.ID === ID){
+        item.states = !item.states
+        return
+      }
+    })
+    this.setState({
+      list:list
+    })
+  }
+
+}
+
+const styles = StyleSheet.create({
+  /* 列表样式 */
+  list:{
+    height: 132,
+    borderBottomWidth: 1,
+    borderColor: '#ccc',
+    paddingLeft: 10,
+    paddingRight: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  listLeft:{
+    width: 110,
+    height: 110,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  icon:{
+    width: 110,
+    height: 110,
+    resizeMode: 'stretch',
+  },
+  listRight:{
+    flex: 1,
+    height: 100,
+    paddingLeft: 10,
+    justifyContent: 'space-between',
+  },
+  name:{
+    fontSize: 16,
+    lineHeight: 26,
+  },
+  zhuan:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  listBottom:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  btn:{
+    width: 78,
+    height: 27,
+    borderWidth: 1,
+    borderColor: Colors.app_color_yellow,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btnText:{
+    color: Colors.app_color_yellow,
+  },
+  btn2:{
+    width: 78,
+    height: 27,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btnText2:{
+    color: '#ccc',
+  },
 })
 ```
 

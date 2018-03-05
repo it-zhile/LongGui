@@ -97,7 +97,7 @@ export default class HomeChuang extends Component{
                   <ImgButton source={{uri:item.img}} style={styles.icon} />
                 </View>
                 <View style={styles.listRight} >
-                  <Text style={styles.name} numberOFLines={1} >{item.name}</Text>
+                  <Text style={styles.name} numberOFLines={1}>{item.name}</Text>
                   <Text style={styles.intro} numberOfLines={2}>{item.intro}</Text>
                   <View style={styles.listBottom} >
                     <Text style={{fontSize: 12,}} >代码费:<Text style={{color:Colors.app_color,fontSize:16}} >￥{item.price}/年</Text></Text>
