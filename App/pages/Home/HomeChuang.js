@@ -44,7 +44,7 @@ export default class HomeChuang extends Component{
         {/* 头部搜索 */}
         <HeaderSearch 
           onPress={()=>{this._navigate('Mine')}}
-          onFocus={()=>{this._navigate('ShopCart')}}
+          onFocus={()=>{this._navigate('Search')}}
         />
         {/* tab 栏 */}
         <ScrollableTabView

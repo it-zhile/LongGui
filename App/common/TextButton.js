@@ -9,7 +9,7 @@ import { TouchableOpacity, Text } from 'react-native';
 export default class TextButton extends Component{
   render(){
     return (
-      <TouchableOpacity onPress={ this.props.onPress } >
+      <TouchableOpacity style={ this.props.touchStyle} onPress={ this.props.onPress } >
         <Text style={ this.props.style } >{ this.props.text }</Text>
       </TouchableOpacity>
     )

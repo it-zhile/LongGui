@@ -21,6 +21,7 @@ import Mine from './pages/Mine/Mine';
 // 子页面
 import HomeChuang from './pages/Home/HomeChuang';
 import HomeGuang from './pages/Home/HomeGuang';
+import Search from './pages/Search/Search';
 
 /**
  * StyleSheet.create：创建样式对象
@@ -132,6 +133,7 @@ const StackRouteConfigs = {
   Scanner: { screen: Scanner },
   HomeChuang: { screen: HomeChuang },
   HomeGuang: { screen: HomeGuang },
+  Search: { screen: Search },
 };
 /**
  * StackNavigatorConfig：导航器配置
