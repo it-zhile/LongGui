@@ -24,7 +24,7 @@ export default class HeaderSearch extends Component{
             underlineColorAndroid="transparent" 
             onFocus={this.props.onFocus}
           />
-          <Image source={ ImgUrls.home_search } style={ styles.iconSearch } /> 
+          <Image source={ ImgUrls.icon_search } style={ styles.iconSearch } /> 
         </View>
       </View>
     )

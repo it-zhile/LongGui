@@ -6,10 +6,13 @@
 
 const ImgUrls = {
   /**
-   * common = 公用图片
+   * icon - 图标
    */
-  common_back:require('./images/common/backIcon.png'),
-  common_more:require('./images/common/更多.png'),
+  icon_back:require('./images/icon/backIcon.png'),
+  icon_more:require('./images/icon/更多.png'),
+  icon_scanner:require('./images/icon/扫码-01.png'),
+  icon_search:require('./images/icon/放大镜-01.png'),
+  icon_delete:require('./images/icon/删除-01.png'),
 
   /**
    * tabbar - 底部导航 
@@ -27,8 +30,6 @@ const ImgUrls = {
    * home - 首页 
    */
   home_touxiang:require('./images/home/touxiang01.jpg'),
-  home_search:require('./images/home/放大镜-01.png'),
-  home_scanner:require('./images/home/扫码-01.png'),
   home_swiper_01:require('./images/home/swripe01.png'),
   home_swiper_02:require('./images/home/swripe02.png'),
   home_swiper_03:require('./images/home/swripe03.png'),

@@ -12,11 +12,11 @@ export default class NavTop extends Component{
     return(
       <View style={styles.navtop}>
         <TouchableOpacity onPress={ this.props.goBack }>
-          <Image style={styles.icon} source={ ImgUrls.common_back } />
+          <Image style={styles.icon} source={ ImgUrls.icon_back } />
         </TouchableOpacity>
         <Text style={styles.title}> {this.props.title} </Text>
         <TouchableOpacity onPress={ this.props.onMore }>
-          <Image style={styles.icon} source={ ImgUrls.common_more } />
+          <Image style={styles.icon} source={ ImgUrls.icon_more } />
         </TouchableOpacity>
       </View>
     )

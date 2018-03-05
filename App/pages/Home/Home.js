@@ -94,9 +94,9 @@ export default class Home extends Component {
             placeholderTextColor="#ccc"
             underlineColorAndroid="transparent" 
           />
-          <Image source={ ImgUrls.home_search } style={ styles.iconSearch } /> 
+          <Image source={ ImgUrls.icon_search } style={ styles.iconSearch } /> 
         </View>
-        <ImgButton onPress={()=>{ this._navigate('Scanner') }} source={ ImgUrls.home_scanner} style={styles.iconScanner} />
+        <ImgButton onPress={()=>{ this._navigate('Scanner') }} source={ ImgUrls.icon_scanner} style={styles.iconScanner} />
       </View>
     )
   }

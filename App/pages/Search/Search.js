@@ -15,6 +15,12 @@ export default class Search extends Component{
       <View style={{flex:1, backgroundColor:'pink'}} >
         {/* 头部搜索栏 */}
         { this.renderSearch() }
+        <View>
+          <Text>搜索历史</Text>
+          <TouchableOpacity onPress={()=>{alert('点击了清空按钮')}} >
+            <Image />
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -32,7 +38,7 @@ export default class Search extends Component{
             autoFocus={true}
             onFocus={this.props.onFocus}
           />
-          <Image source={ ImgUrls.home_search } style={ styles.iconSearch } /> 
+          <Image source={ ImgUrls.icon_search } style={ styles.iconSearch } /> 
         </View>
         <TextButton touchStyle={styles.touchBtn} onPress={()=>{alert('点击了搜索按钮')}} style={styles.textBtn} text="搜索" />
       </View>
@@ -41,6 +47,7 @@ export default class Search extends Component{
 }
 
 const styles = StyleSheet.create({
+  /** 头部搜索栏样式 */
   header:{
     height: 40,
     backgroundColor: Colors.app_color,
