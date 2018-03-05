@@ -10,16 +10,39 @@ import { ImgUrls, Colors, CommonStyles, Contants} from '../../assets';
 import { ImgButton, TextButton } from '../../common';
 
 export default class Search extends Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      list:['猪蹄','茶叶','小家电','女装',]
+    }
+  }
+
   render(){
     return(
-      <View style={{flex:1, backgroundColor:'pink'}} >
+      <View style={{flex:1, backgroundColor:'#fff'}} >
         {/* 头部搜索栏 */}
         { this.renderSearch() }
-        <View>
-          <Text>搜索历史</Text>
-          <TouchableOpacity onPress={()=>{alert('点击了清空按钮')}} >
-            <Image />
-          </TouchableOpacity>
+        {/* 内容区域 */}
+        <View style={styles.content} >
+          {/* 历史/清空 */}
+          <View style={styles.topBox}>
+            <Text style={{fontSize: 14}} >搜索历史</Text>
+            <TouchableOpacity style={styles.deleteBtn} onPress={()=>{alert('点击了清空按钮')}} >
+              <Image source={ ImgUrls.icon_delete} style={styles.iconDelete}/>
+              <Text style={{fontSize: 14,paddingLeft: 2,}} >清空</Text>
+            </TouchableOpacity>
+          </View>
+          {/* 搜索记录 */}
+          <View style={styles.record}>
+          { this.state.list.map((item,i)=>{
+            return(
+              <TouchableOpacity onPress={()=>{alert('按钮内容为'+item)}} key={i} style={styles.textBox}>
+                <Text>{item}</Text>
+              </TouchableOpacity>
+            )
+          })}
+          </View>
         </View>
       </View>
     )
@@ -97,4 +120,40 @@ const styles = StyleSheet.create({
   textBtn:{
     color: Colors.app_color,
   },
+  content:{
+    flex: 1,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  /* 历史/清空 */
+  topBox:{
+    height: 38,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  deleteBtn:{
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconDelete:{
+    width: 15,
+    height: 15,
+    tintColor: '#777',
+  },
+  /** 搜索记录 */
+  record:{
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textBox:{
+    width: 76,
+    height: 27,
+    borderWidth: 1,
+    borderColor: '#777',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 })
