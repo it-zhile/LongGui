@@ -4,7 +4,8 @@
  * Desc:如：接口地址，字符串常量等
  */
 const Contants = {
-  MockAai:'http://rap2api.taobao.org/app/mock/3781/',
+  // Mock 模拟数据接口
+  API: 'http://rap2api.taobao.org/app/mock/3781/',
 }
 
 export default Contants;

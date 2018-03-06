@@ -125,7 +125,7 @@ export default class HomeChuang extends Component{
    * _getList(){} 发送请求获取数据
    */
   _getList(){
-    fetch(Contants.MockAai+"GET/api/chuang",{ method: 'GET' })
+    fetch(Contants.API+"GET/api/chuang",{ method: 'GET' })
       .then((response) => response.json())
       .then((responseJson) => {
         var arr1 = [];

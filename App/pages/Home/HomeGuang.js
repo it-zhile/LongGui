@@ -134,7 +134,7 @@ export default class HomeGuang extends Component{
   }
   /** 获取数据 */
   _getList(){
-    fetch(Contants.MockAai+"GET/api/guang",{ method:'GET'})
+    fetch(Contants.API+"GET/api/guang",{ method:'GET'})
     .then((response)=> response.json())
     .then((responseJson)=>{
       console.log(responseJson)
