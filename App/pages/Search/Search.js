@@ -14,7 +14,7 @@ export default class Search extends Component{
   constructor(props){
     super(props);
     this.state = {
-      list:['猪蹄','茶叶','小家电','女装',]
+      list:['猪蹄','茶叶','小家电','女装','茶叶','小家电','女装','茶叶','小家电','女装',]
     }
   }
 
@@ -35,13 +35,15 @@ export default class Search extends Component{
           </View>
           {/* 搜索记录 */}
           <View style={styles.record}>
-          { this.state.list.map((item,i)=>{
-            return(
-              <TouchableOpacity onPress={()=>{alert('按钮内容为'+item)}} key={i} style={styles.textBox}>
-                <Text>{item}</Text>
-              </TouchableOpacity>
-            )
-          })}
+            { this.state.list.map((item,i)=>{
+              return(
+                <View key={i} style={styles.box} >
+                  <TouchableOpacity onPress={()=>{alert('按钮内容为'+item)}}  style={styles.textBox}>
+                    <Text>{item}</Text>
+                  </TouchableOpacity>
+                </View>
+              )
+            })}
           </View>
         </View>
       </View>
@@ -97,14 +99,14 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
     borderRadius: 6,
     padding: 0,
-    paddingLeft: 10,
+    paddingLeft: 26,
   },
   iconSearch:{
     width: 16,
     height: 16,
     tintColor: '#fff',
     position: 'absolute',
-    right: '7%',
+    left: '7%',
     top: '50%',
     marginTop: -8,
   },
@@ -145,7 +147,13 @@ const styles = StyleSheet.create({
   record:{
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexWrap:'wrap',
+  },
+  box:{
+    width: '25%',
+    height: 27,
+    marginBottom: 10,
+    alignItems: 'center',
   },
   textBox:{
     width: 76,

@@ -96,6 +96,7 @@ export default class Home extends Component {
             placeholder="请输入您要搜索的内容"
             placeholderTextColor="#ccc"
             underlineColorAndroid="transparent" 
+            onFocus={()=>{this._navigate('Search')}}
           />
           <Image source={ ImgUrls.icon_search } style={ styles.iconSearch } /> 
         </View>
