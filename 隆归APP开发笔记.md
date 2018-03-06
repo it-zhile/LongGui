@@ -1,4 +1,5 @@
-# 隆归APP开发笔记
+启动关闭计时器启动关闭计时器隆归APP开发笔记
+
 > 隆归APP为电商型APP项目，使用 ReactNative 版本为 0.51.0
 >
 > GitHub：https://github.com/it-zhile/longgui.git
@@ -2551,3 +2552,110 @@ const styles = StyleSheet.create({
 })
 ```
 
+
+
+## react-native-easy-toast 提示插件
+
+> react-native-easy-toast 提示插件适用于 android 与 ios
+>
+> GitHub：<https://github.com/crazycodeboy/react-native-easy-toast>
+
+### 安装 react-native-easy-toast
+
+在终端运行：
+
+```
+$ npm i react-native-easy-toast --save
+```
+
+在要使用 Toast 的 js文件 中添加：
+
+```jsx
+import Toast, {DURATION} from 'react-native-easy-toast'
+```
+
+### 使用 react-native-easy-toast
+
+添加 `react-native-easy-toast` 到你的 js文件 中：
+
+```jsx
+import Toast, {DURATION} from 'react-native-easy-toast'
+```
+
+在组件的渲染方法中，使用Toast：
+
+```jsx
+render() {
+ return (
+     <View style={styles.container}>
+         ...
+         <Toast ref="toast"/>
+     </View>
+ );
+}
+```
+
+**注意：将其添加到根视图的底部。**
+
+在需要弹出提示框时调用下面的代码即可：
+
+```jsx
+this.refs.toast.show('hello world!')
+```
+
+一真显示提示框，直到手动关闭为止：
+
+```jsx
+this.refs.toast.show('hello world!', DURATION.FOREVER)
+```
+
+设置提示框显示的时间：
+
+```jsx
+this.refs.toast.close('hello world!', 500)
+```
+
+目前，FOREVER模式下close（）的默认延迟设置为250 ms（或者 this.props.defaultCloseDelay，您可以将其传递）
+
+```jsx
+< Toast ... defaultCloseDelay = { 100 } />
+```
+
+完整代码：
+
+```jsx
+import React,{ Component } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+
+export default class ToastDemo extends Component{
+  render(){
+    return(
+    	<View>
+    		<TouchableOpacity onPress={()=>{ this.refs.toast.show('hello World!')}}>
+    			<Text>点击弹出提示框<Text>
+    		</TouchableOpacity>
+    		<Toast ref="toast"/>
+    	</View>
+    )
+  }
+}
+```
+
+### react-native-easy-toast 属性
+
+| 属性              | 类型     | 属性值                                      | 描述               |
+| --------------- | ------ | ---------------------------------------- | ---------------- |
+| style           | Style  | 默认值为：{backgroundColor: 'black',opacity: OPACITY,borderRadius: 5,padding: 10,} | toast 提示框的样式     |
+| position        | String | 'top'/'center'/'bottom' ;默认值为：'bottom'   | toast 提示框的位置     |
+| positionValue   | Number | 默认值为：120                                 | toast 提示框的位置值    |
+| fadeInDuration  | Number | 默认值为：500                                 | toast 提示框 显示持续时间 |
+| fadeOutDuration | Number | 默认值为：500                                 | toast 提示框关闭时间    |
+| opacity         | Number | 默认值为：1                                   | toast 提示框的不透明度   |
+| textStyle       | Style  | 默认值为：{color:'white'}                     | toast 提示框文本样式    |
+
+### react-native-easy-toast 方法
+
+| 方法                     | 类型       | 是否可选 | 描述         |
+| ---------------------- | -------- | ---- | ---------- |
+| show(’文本‘, 持续时间Number) | function | 必选   | 表示敬酒，单位是毫秒 |
+| close()                | function | 可选   | 启动关闭计时器    |

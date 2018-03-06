@@ -9,6 +9,8 @@ import React, { Component } from 'react';
 import { Platfrom, Dimensions, StyleSheet, View, Text, Image, TextInput, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 // 导入轮播图插件
 import Swiper from 'react-native-swiper';
+// 导入 toast 插件
+import Toast, {DURATION} from 'react-native-easy-toast'
 
 // 导入静态资源
 import { ImgUrls, Colors, CommonStyles, Contants } from '../../assets/';
@@ -60,14 +62,15 @@ export default class Home extends Component {
             <ImgButton onPress={()=>{ this._navigate('HomeGuang') }} style={styles.gcImg} source={ImgUrls.home_guang} />
           </View>
           {/* 逛一逛标题 */}
-          {this.renderTitle('逛一逛',()=>{ alert('点击了逛一逛标题的更多！')})}
+          {this.renderTitle('逛一逛',()=> this.refs.toast.show('点击了逛一逛标题的更多！',3000) )}
           {/* 分类 */}
           { this.renderFenLei() }
           {/* 闯一闯标题 */}
-          {this.renderTitle('闯一闯',()=>{ alert('点击了闯一闯更多！')})}
+          {this.renderTitle('闯一闯',()=> this.refs.toast.show('点击了闯一闯更多！') )}
           {/* 闯一闯列表内容 */}
           {this.renderList(this.state.imgList)}
         </ScrollView>
+        <Toast ref="toast" opacity={0.7} position="center" textStyle={{fontWeight: '700',color:'#fff'}}/>
       </View>
     )
   }
