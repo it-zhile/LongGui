@@ -33,6 +33,7 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = { 
+      swriperList:[],
       imgList:[ 
         {imageUrl:ImgUrls.home_picture_01},
         {imageUrl:ImgUrls.home_picture_02},
@@ -40,6 +41,16 @@ export default class Home extends Component {
         {imageUrl:ImgUrls.home_picture_04},
       ]
     };
+  }
+
+  /**
+   * 生命周期 componentDidMount 
+   * componentDidMount() 在初始化render之后只执行一次，在这个方法内，可以访问任何组件，
+   * componentDidMount() 方法中的子组件在父组件之前执行 
+   * 从这个函数开始，就可以和 JS 其他框架交互了，例如设置计时 setTimeout 或者 setInterval，或者发起网络请求
+   */
+  componentDidMount() { 
+    this._getImgList();
   }
 
   /**
@@ -239,6 +250,22 @@ export default class Home extends Component {
   _navigate(screen) {
     const { navigate } = this.props.navigation;
     navigate(screen);
+  }
+  /**
+   * 获取轮播图数据 
+   */
+  _getImgList(){
+    fetch(Contants.API+'GET/api/v1/advertisingContent/get?appId=10000',{ method: 'GET'})
+    .then((response)=> response.json())
+    .then((responseJson)=>{
+      this.setState({
+        swriperList: responseJson.data.gyg,
+        // imgList: responseJson.data.cyc,
+      })
+    })
+    .catch((error) => {
+      console.error("轮播图与闯一闯列表数据请求失败！！！");
+    })
   }
 
 }

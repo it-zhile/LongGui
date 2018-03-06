@@ -6,6 +6,8 @@
 const Contants = {
   // Mock 模拟数据接口
   API: 'http://rap2api.taobao.org/app/mock/3781/',
+  // 数据接口
+  // API: 'http://192.168.1.248:8200/',
 }
 
 export default Contants;
