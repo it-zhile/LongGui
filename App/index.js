@@ -21,6 +21,7 @@ import Mine from './pages/Mine/Mine';
 // 子页面
 import HomeChuang from './pages/Home/HomeChuang';
 import HomeGuang from './pages/Home/HomeGuang';
+import HomeTaste from './pages/Home/HomeTaste';
 import Search from './pages/Search/Search';
 
 /**
@@ -133,6 +134,7 @@ const StackRouteConfigs = {
   Scanner: { screen: Scanner },
   HomeChuang: { screen: HomeChuang },
   HomeGuang: { screen: HomeGuang },
+  HomeTaste: { screen: HomeTaste },
   Search: { screen: Search },
 };
 /**

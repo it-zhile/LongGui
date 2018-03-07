@@ -32,14 +32,36 @@ export default class Home extends Component {
    */
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       swriperList:[],
-      imgList:[ 
-        {imageUrl:ImgUrls.home_picture_01},
-        {imageUrl:ImgUrls.home_picture_02},
-        {imageUrl:ImgUrls.home_picture_03},
-        {imageUrl:ImgUrls.home_picture_04},
+      imgList:[],
+      fenleiList:[
+        {title:'女装',img:ImgUrls.home_guang_01},
+        {title:'酒水',img:ImgUrls.home_guang_02},
+        {title:'茶叶',img:ImgUrls.home_guang_03},
+        {title:'陶瓷',img:ImgUrls.home_guang_04},
+      ],
+      chuangList:[
+        { 
+          title:'餐饮食品',
+          data:[
+            {name:'广州天源股份有限公司',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司',icon:ImgUrls.home_touxiang},
+          ]
+        },
+        { 
+          title:'女装男装',
+          data:[
+            {name:'广州天源股份有限公司2',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司2',icon:ImgUrls.home_touxiang},
+
+          ]
+        },
+        
       ]
+      ,
     };
   }
 
@@ -64,22 +86,22 @@ export default class Home extends Component {
         {/* 头部 */}
         { this.renderHeader() }
         {/* 滚动视图 */}
-        <ScrollView style={{marginBottom: -10,}}>
+        <ScrollView>
           {/* 轮播图 */}
           { this.renderSwiper() }
           {/* 首页逛一逛、闯一闯入口 */}
           <View style={styles.gcEntry}>
             <ImgButton onPress={()=>{ this._navigate('HomeChuang') }} style={styles.gcImg} source={ImgUrls.home_chuang} />
-            <ImgButton onPress={()=>{ this._navigate('HomeGuang') }} style={styles.gcImg} source={ImgUrls.home_guang} />
+            <ImgButton onPress={()=>{ this._navigate('HomeGuang') }}  style={styles.gcImg} source={ImgUrls.home_guang} />
           </View>
           {/* 逛一逛标题 */}
-          {this.renderTitle('逛一逛',()=> this.refs.toast.show('点击了逛一逛标题的更多！',3000) )}
+          { this.renderTitle('逛一逛推荐',()=> this._navigate('HomeTaste'),'换口味 〉') }
           {/* 分类 */}
           { this.renderFenLei() }
           {/* 闯一闯标题 */}
-          {this.renderTitle('闯一闯',()=> this.refs.toast.show('点击了闯一闯更多！') )}
+          { this.renderTitle('闯一闯推荐',()=> this._navigate('HomeChuang'),'更多 〉') }
           {/* 闯一闯列表内容 */}
-          {this.renderList(this.state.imgList)}
+          { this.renderList(this.state.chuangList) }
         </ScrollView>
         <Toast ref="toast" opacity={0.7} position="center" textStyle={{fontWeight: '700',color:'#fff'}}/>
       </View>
@@ -159,10 +181,9 @@ export default class Home extends Component {
                 marginLeft: 2,
                 marginRight: 2,
             }}/>}>
-            <ImgButton onPress={()=>{alert('点击了图1')}} source={ImgUrls.home_swiper_01} style={styles.swiperImg} />
-            <ImgButton onPress={()=>{alert('点击了图2')}} source={ImgUrls.home_swiper_02} style={styles.swiperImg} />
-            <ImgButton onPress={()=>{alert('点击了图3')}} source={ImgUrls.home_swiper_03} style={styles.swiperImg} />
-            <ImgButton onPress={()=>{alert('点击了图4')}} source={ImgUrls.home_swiper_04} style={styles.swiperImg} />
+            { this.state.swriperList.map((item,i)=>{
+              return <ImgButton key={i} onPress={()=>{this.refs.toast.show('点击了第'+(i+1)+'张图片！')}} source={{uri:item.imageUrl}} style={styles.swiperImg} />
+            })}
         </Swiper>
       </View>
     )
@@ -173,7 +194,7 @@ export default class Home extends Component {
    *  - title：接收传递进来的内容作为标题文本
    *  - onpress：接收传递进来的事件
    */
-  renderTitle(title,onpress){
+  renderTitle(title,onpress,text){
     return (
       <View style={styles.TitleBox}>
         <View style={styles.title} >
@@ -182,7 +203,7 @@ export default class Home extends Component {
           <View style={[styles.TitleBoxIcon,{borderTopRightRadius: 2,borderBottomRightRadius: 2,}]}></View>
         </View>
         <View style={styles.TitleBoxRight} >
-          <TextButton onPress={ onpress } style={styles.TitleRightText} text="更多 >"/>
+          <TextButton onPress={ onpress } style={styles.TitleRightText} text={text}/>
         </View>
       </View>
     )
@@ -196,18 +217,27 @@ export default class Home extends Component {
       <View style={styles.fenleiBox}>
         <View style={[styles.fenleiTopBottom,CommonStyles.borderBottom1,CommonStyles.borderColor_ccc]} >
           <View style={{flex:1}}>
-            <ImgButton style={styles.fenleiImg} source={ImgUrls.home_guang_01} />
+            <ImgButton 
+              onPress={()=>{this._getTasteInfo()}} 
+              style={styles.fenleiImg} 
+              source={this.state.fenleiList[0].img} />
           </View>
           <View style={[CommonStyles.borderLeft1,CommonStyles.borderColor_ccc,{flex:1}]}>
-            <ImgButton style={styles.fenleiImg} source={ImgUrls.home_guang_02} />
+            <ImgButton 
+              style={styles.fenleiImg} 
+              source={this.state.fenleiList[1].img} />
           </View>
         </View>
         <View style={styles.fenleiTopBottom} >
           <View style={{flex:1}}>
-            <ImgButton style={styles.fenleiImg} source={ImgUrls.home_guang_03} />
+            <ImgButton 
+              style={styles.fenleiImg} 
+              source={this.state.fenleiList[2].img} />
           </View>
           <View style={[CommonStyles.borderLeft1,CommonStyles.borderColor_ccc,{flex:1}]}>
-            <ImgButton style={styles.fenleiImg} source={ImgUrls.home_guang_04} />
+            <ImgButton 
+              style={styles.fenleiImg} 
+              source={this.state.fenleiList[3].img} />
           </View>
         </View>
       </View>
@@ -224,24 +254,35 @@ export default class Home extends Component {
    *     - 若不指定此函数，则默认抽取item.key作为key值。
    *     - 若item.key也不存在，则使用数组下标。 
    */
-  renderList(imgList){
+  renderList(chuangList){
     return (
-       <FlatList
-        data={imgList}
-        renderItem={({item}) => {
-          return (
-            <View style={styles.CLImgbox}>
-              <Image style={styles.CLImg}  source={item.imageUrl} />
-            </View>
-          ) 
-        }}
-        keyExtractor={(item,index) => index}
-      />
+      <View style={styles.listbox}>
+      { chuangList.map((item,i)=>{
+        return(
+          <View key={i} style={styles.listItem}>
+          <View style={styles.listItemLeft} >
+            <Text style={styles.listItemLeftText} >餐</Text>
+            <Text style={styles.listItemLeftText} >饮</Text>
+            <Text style={styles.listItemLeftText} >食</Text>
+            <Text style={styles.listItemLeftText} >品</Text>
+          </View>
+          <View style={styles.listItemRight}>
+            { item.data.map((info,i)=>{
+              return(
+                <TouchableOpacity key={i} style={styles.listItemRightItem}>
+                  <Image style={styles.listImg} source={info.icon} />
+                  <Text sytle={styles.listItemRightText} >{info.name}</Text>
+                </TouchableOpacity>
+              )
+            }) }
+
+          </View>
+        </View>
+        )
+      })}
+      </View>
     )
   }
-
-
-
 
   /**
    * 页面跳转事件
@@ -260,12 +301,21 @@ export default class Home extends Component {
     .then((responseJson)=>{
       this.setState({
         swriperList: responseJson.data.gyg,
-        // imgList: responseJson.data.cyc,
+        imgList: responseJson.data.cyc,
       })
     })
     .catch((error) => {
       console.error("轮播图与闯一闯列表数据请求失败！！！");
     })
+  }
+  /**
+   * 接收 HomeTaste 页面传递的数据
+   */
+  _getTasteInfo(){
+    const { params } = this.props.navigation.state;
+    if(params){
+      alert(params.info)
+    }
   }
 
 }
@@ -418,7 +468,6 @@ const styles = StyleSheet.create({
     height: 130,
     borderBottomWidth: 10,
     borderColor: '#ccc',
-    // backgroundColor: '#00ff',
     justifyContent:'center',
     alignItems: 'center',
   },
@@ -428,4 +477,51 @@ const styles = StyleSheet.create({
     resizeMode:'stretch',
     backgroundColor:'blue',
   },
+
+  listbox:{
+    flex:1,
+  },
+  listItem:{
+    height: 160,
+    backgroundColor:'#f1f1f1',
+    padding: 10,
+    flexDirection: 'row',
+  },
+  listItemLeft:{
+    width: 30,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    backgroundColor: '#20c5d3',
+    alignItems: 'center',
+    paddingTop: 15,
+  },
+  listItemLeftText:{
+    fontSize: 18,
+    color: '#fff',
+  },
+  listItemRight:{
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingTop: 10,
+  },
+  listItemRightItem:{
+    width: '50%',
+    height: '50%',
+    borderWidth: 0.5,
+    borderColor: '#f1f1f1',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingLeft: 10,
+    paddingRight: 70,
+  },
+  listImg:{
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
+  listItemRightText:{
+  }
+
 })
