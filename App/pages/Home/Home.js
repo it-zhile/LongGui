@@ -48,7 +48,6 @@ export default class Home extends Component {
             {name:'广州天源股份有限公司',icon:ImgUrls.home_touxiang},
             {name:'广州天源股份有限公司',icon:ImgUrls.home_touxiang},
             {name:'广州天源股份有限公司',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司',icon:ImgUrls.home_touxiang},
           ]
         },
         { 
@@ -56,7 +55,32 @@ export default class Home extends Component {
           data:[
             {name:'广州天源股份有限公司2',icon:ImgUrls.home_touxiang},
             {name:'广州天源股份有限公司2',icon:ImgUrls.home_touxiang},
-
+          ]
+        },
+        { 
+          title:'茶叶酒水',
+          data:[
+            {name:'广州天源股份有限公司3',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司3',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司3',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司3',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司3',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司3',icon:ImgUrls.home_touxiang},
+          ]
+        },
+        { 
+          title:'数码家电',
+          data:[
+            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
+            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
           ]
         },
         
@@ -73,6 +97,7 @@ export default class Home extends Component {
    */
   componentDidMount() { 
     this._getImgList();
+    this._chuangList();
   }
 
   /**
@@ -261,21 +286,17 @@ export default class Home extends Component {
         return(
           <View key={i} style={styles.listItem}>
           <View style={styles.listItemLeft} >
-            <Text style={styles.listItemLeftText} >餐</Text>
-            <Text style={styles.listItemLeftText} >饮</Text>
-            <Text style={styles.listItemLeftText} >食</Text>
-            <Text style={styles.listItemLeftText} >品</Text>
+            <Text style={styles.listItemLeftText}>{item.title}</Text>
           </View>
           <View style={styles.listItemRight}>
             { item.data.map((info,i)=>{
               return(
                 <TouchableOpacity key={i} style={styles.listItemRightItem}>
                   <Image style={styles.listImg} source={info.icon} />
-                  <Text sytle={styles.listItemRightText} >{info.name}</Text>
+                  <Text numberOfLines={3} sytle={styles.listItemRightText}>{info.name}</Text>
                 </TouchableOpacity>
               )
-            }) }
-
+            })}
           </View>
         </View>
         )
@@ -315,6 +336,25 @@ export default class Home extends Component {
     const { params } = this.props.navigation.state;
     if(params){
       alert(params.info)
+    }
+  }
+
+  /**
+   * 闯一闯推荐列表数据处理
+   * 循环判断chuangList的每项data数据
+   * 如果data数据小于4条就加上缺少的数据凑够4条
+   * 如果data数据大于4条就减去多余数据保证数据只有4条
+   */
+  _chuangList(){
+    var list = this.state.chuangList;
+    for(var i = 0 ; i < list.length; i++){
+      if(list[i].data.length<4){
+        for(var k = 0 ; k < 5-list[i].data.length; k++){
+          list[i].data.push({name:'虚位以待',icon:ImgUrls.home_picture_null})
+        }
+      }else if(list[i].data.length>4){
+          list[i].data.splice(4)
+      }
     }
   }
 
@@ -492,12 +532,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     backgroundColor: '#20c5d3',
-    alignItems: 'center',
     paddingTop: 15,
   },
   listItemLeftText:{
     fontSize: 18,
     color: '#fff',
+    textAlign: 'center',
   },
   listItemRight:{
     flex: 1,
