@@ -29,6 +29,7 @@ export default class Home extends Component {
    * constructor(props){}：
    * super(props)：
    * this.state：
+   * 注意：这里的占位数据不能写null否则网请求回来的数据赋值后在render里调用会报错
    */
   constructor(props) {
     super(props);
@@ -44,48 +45,9 @@ export default class Home extends Component {
       chuangList:[
         { 
           title:'餐饮食品',
-          data:[
-            {name:'广州天源股份有限公司',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司',icon:ImgUrls.home_touxiang},
-          ]
+          data:[]
         },
-        { 
-          title:'女装男装',
-          data:[
-            {name:'广州天源股份有限公司2',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司2',icon:ImgUrls.home_touxiang},
-          ]
-        },
-        { 
-          title:'茶叶酒水',
-          data:[
-            {name:'广州天源股份有限公司3',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司3',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司3',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司3',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司3',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司3',icon:ImgUrls.home_touxiang},
-          ]
-        },
-        { 
-          title:'数码家电',
-          data:[
-            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
-            {name:'广州天源股份有限公司44444444444444',icon:ImgUrls.home_touxiang},
-          ]
-        },
-        
       ]
-      ,
     };
   }
 
@@ -95,9 +57,15 @@ export default class Home extends Component {
    * componentDidMount() 方法中的子组件在父组件之前执行 
    * 从这个函数开始，就可以和 JS 其他框架交互了，例如设置计时 setTimeout 或者 setInterval，或者发起网络请求
    */
-  componentDidMount() { 
+  componentWillMount() { 
+    // 获取轮播图数据
     this._getImgList();
-    this._chuangList();
+    // 闯一闯推荐列表数据处理
+    // this._chuangList();
+    // 获取行业
+    this._getIndustry();
+    // this._chuangList();
+    
   }
 
   /**
@@ -126,7 +94,7 @@ export default class Home extends Component {
           {/* 闯一闯标题 */}
           { this.renderTitle('闯一闯推荐',()=> this._navigate('HomeChuang'),'更多 〉') }
           {/* 闯一闯列表内容 */}
-          { this.renderList(this.state.chuangList) }
+          { this.renderList() }
         </ScrollView>
         <Toast ref="toast" opacity={0.7} position="center" textStyle={{fontWeight: '700',color:'#fff'}}/>
       </View>
@@ -242,7 +210,7 @@ export default class Home extends Component {
       <View style={styles.fenleiBox}>
         <View style={[styles.fenleiTopBottom,CommonStyles.borderBottom1,CommonStyles.borderColor_ccc]} >
           <View style={{flex:1}}>
-            <ImgButton 
+            <ImgButton
               onPress={()=>{this._getTasteInfo()}} 
               style={styles.fenleiImg} 
               source={this.state.fenleiList[0].img} />
@@ -279,21 +247,22 @@ export default class Home extends Component {
    *     - 若不指定此函数，则默认抽取item.key作为key值。
    *     - 若item.key也不存在，则使用数组下标。 
    */
-  renderList(chuangList){
+  renderList(){
     return (
       <View style={styles.listbox}>
-      { chuangList.map((item,i)=>{
+      { this.state.chuangList.map((item,i)=>{
         return(
           <View key={i} style={styles.listItem}>
           <View style={styles.listItemLeft} >
             <Text style={styles.listItemLeftText}>{item.title}</Text>
           </View>
           <View style={styles.listItemRight}>
+            { this._getData('http://192.168.1.145:8200/api/organization/listOrganization?appId=10000',item,item.data) }
             { item.data.map((info,i)=>{
               return(
                 <TouchableOpacity key={i} style={styles.listItemRightItem}>
-                  <Image style={styles.listImg} source={info.icon} />
-                  <Text numberOfLines={3} sytle={styles.listItemRightText}>{info.name}</Text>
+                  <Image style={styles.listImg} source={{uri:info.logoImage}} />
+                  <Text numberOfLines={3} sytle={styles.listItemRightText}>{info.organizationName}</Text>
                 </TouchableOpacity>
               )
             })}
@@ -317,7 +286,7 @@ export default class Home extends Component {
    * 获取轮播图数据 
    */
   _getImgList(){
-    fetch(Contants.API+'GET/api/v1/advertisingContent/get?appId=10000',{ method: 'GET'})
+    fetch(Contants.API+'GET/'+'api/v1/advertisingContent/get?appId=10000',{ method: 'GET'})
     .then((response)=> response.json())
     .then((responseJson)=>{
       this.setState({
@@ -338,6 +307,62 @@ export default class Home extends Component {
       alert(params.info)
     }
   }
+
+    /**
+   * 带参数的get请求封装
+   */
+  _getData(url,params,data){
+    if (params) {
+      let paramsArray = [];
+      //拼接参数
+      Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]))
+      if (url.search(/\?/) === -1) {
+          url += '?' + paramsArray.join('&')
+      } else {
+          url += '&' + paramsArray.join('&')
+      }
+    }
+    
+    fetch(url, { method: 'GET'})
+    .then((response)=> response.json())
+    .then((responseJson)=>{
+      responseJson.data.organizationList.map((item)=>{
+        data.push(item)
+      })
+    });
+  }
+
+  /**
+   * 获取行业 - 带参数的get请求
+   */
+  _getIndustry(){
+    let params = {
+      "appId": "10000",
+    };
+    let url = 'GET/'+'api/common/industryByOrganization';
+    if (params) {
+      let paramsArray = [];
+      Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]))
+      if (url.search(/\?/) === -1) {
+          url += '?' + paramsArray.join('&')
+      } else {
+          url += '&' + paramsArray.join('&')
+      }
+    }
+    fetch(Contants.API+url)
+    .then((response)=> response.json())
+    .then((responseJson)=>{
+      var list = []
+      responseJson.data.map((item,i)=>{
+        list.push({title:item.name,data:[]})
+      })
+      this.setState({
+        chuangList:list,
+      })
+      // console.log(this.state.chuangList)
+    });
+  }
+
 
   /**
    * 闯一闯推荐列表数据处理
@@ -535,7 +560,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   listItemLeftText:{
-    fontSize: 18,
+    fontSize: 16,
     color: '#fff',
     textAlign: 'center',
   },
