@@ -360,7 +360,7 @@ export default class Home extends Component {
       this.setState({
         chuangList:list,
       })
-      console.log(responseJson.data)
+      // console.log(responseJson.data)
     });
   }
 
@@ -373,7 +373,7 @@ export default class Home extends Component {
       this.setState({
         chuangData:responseJson.data,
       })
-      console.log(responseJson)
+      // console.log(responseJson)
     });
   }
 
