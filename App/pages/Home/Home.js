@@ -47,7 +47,8 @@ export default class Home extends Component {
           title:'餐饮食品',
           data:[]
         },
-      ]
+      ],
+      chuangData:[],
     };
   }
 
@@ -65,7 +66,7 @@ export default class Home extends Component {
     // 获取行业
     this._getIndustry();
     // this._chuangList();
-    
+    this._getInfo();
   }
 
   /**
@@ -257,8 +258,7 @@ export default class Home extends Component {
             <Text style={styles.listItemLeftText}>{item.title}</Text>
           </View>
           <View style={styles.listItemRight}>
-            { this._getData('http://192.168.1.145:8200/api/organization/listOrganization?appId=10000',item,item.data) }
-            { item.data.map((info,i)=>{
+            { this.state.chuangData.map((info,i)=>{
               return(
                 <TouchableOpacity key={i} style={styles.listItemRightItem}>
                   <Image style={styles.listImg} source={{uri:info.logoImage}} />
@@ -355,11 +355,25 @@ export default class Home extends Component {
       var list = []
       responseJson.data.map((item,i)=>{
         list.push({title:item.name,data:[]})
+        // this._getData('http://192.168.1.145:8200/api/organization/listOrganization?appId=10000',item,list.data)
       })
       this.setState({
         chuangList:list,
       })
-      // console.log(this.state.chuangList)
+      console.log(responseJson.data)
+    });
+  }
+
+  _getInfo(){
+    let params = {"code": "A01","name": "线下零售","id": "A01","appId": 10000}
+    let url = Contants.API+'POST/api/organization/listOrganization'
+    fetch(url, { method: 'post',body:JSON.stringify(params)})
+    .then((response)=> response.json())
+    .then((responseJson)=>{
+      this.setState({
+        chuangData:responseJson.data,
+      })
+      console.log(responseJson)
     });
   }
 
@@ -549,8 +563,12 @@ const styles = StyleSheet.create({
   listItem:{
     height: 160,
     backgroundColor:'#f1f1f1',
-    padding: 10,
+    // padding: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 10,
     flexDirection: 'row',
+    overflow: 'hidden',
   },
   listItemLeft:{
     width: 30,
